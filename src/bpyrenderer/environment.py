@@ -31,8 +31,8 @@ def set_env_map(env_path: str):
     env_texture_node.image = bpy.data.images.get(os.path.basename(env_path))
 
 
-def set_background_color(rgba: List = [1.0, 1.0, 1.0, 1.0]):
+def set_background_color(rgba: List = [1.0, 1.0, 1.0, 1.0], strength: float = 1.0):
     world_tree = bpy.context.scene.world.node_tree
     back_node = world_tree.nodes["Background"]
     back_node.inputs["Color"].default_value = Vector(rgba)
-    back_node.inputs["Strength"].default_value = 1.0
+    back_node.inputs["Strength"].default_value = strength

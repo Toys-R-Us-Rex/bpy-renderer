@@ -40,6 +40,13 @@ COLORS = [
     (0.80, 0.85, 0.90, 1.0),  # Pale Blue
     (0.85, 0.80, 0.65, 1.0),  # Cream Yellow
     (0.75, 0.80, 0.85, 1.0),  # Lake Blue
+    (0.80, 0.75, 0.90, 1.0),  # Lavender Purple
+    (0.90, 0.85, 0.70, 1.0),  # Soft Green
+    (0.85, 0.70, 0.85, 1.0),  # Soft Pink
+    (0.70, 0.85, 0.90, 1.0),  # Sky Blue
+    (0.75, 0.90, 0.80, 1.0),  # Light Green
+    (0.90, 0.80, 0.75, 1.0),  # Coral Pink
+    (0.80, 0.85, 0.90, 1.0),  # Pale Blue
 ]
 
 for i, obj in enumerate(scene_manager.scene_meshes):

@@ -117,7 +117,7 @@ def enable_normals_output(
     output_dir: Optional[str] = "",
     file_prefix: str = "normal_",
     use_rgb_conversion: bool = True,
-    file_format: Literal["OPEN_EXR", "WEBP", "PNG"] = "WEBP",
+    file_format: Literal["OPEN_EXR", "WEBP", "PNG"] = "PNG",
 ):
     """
     Enable normal output in pure world-space coordinates without any transformations.

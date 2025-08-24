@@ -8,7 +8,7 @@ setup(
     author_email="huanngzh@gmail.com",
     packages=find_packages(where="src"),
     package_dir={"": "src"},
-    install_requires=["numpy", "bpy", "imageio[ffmpeg]"],
+    install_requires=["numpy", "imageio[ffmpeg]"],
     python_requires=">=3.8.0",
     classifiers=[
         "Development Status :: 3 - Alpha",

@@ -109,15 +109,37 @@ def import_vertex_colored_models(
     # Create a Diffuse BSDF node
     diffuse_node = nodes.new(type="ShaderNodeBsdfDiffuse")
 
+    # Create a Transparent BSDF node for transparency
+    transparent_node = nodes.new(type="ShaderNodeBsdfTransparent")
+
+    # Create a Mix Shader node to blend diffuse and transparent
+    mix_shader_node = nodes.new(type="ShaderNodeMixShader")
+
     # Create an Output node
     output_node = nodes.new(type="ShaderNodeOutputMaterial")
+
+    # Set up transparency - use vertex color alpha channel
+    # Create a Separate RGB node to extract alpha from vertex color
+    separate_rgb_node = nodes.new(type="ShaderNodeSeparateColor")
+    material.node_tree.links.new(
+        vertex_color_node.outputs["Color"], separate_rgb_node.inputs["Color"]
+    )
+    material.node_tree.links.new(
+        separate_rgb_node.outputs["Alpha"], mix_shader_node.inputs[0]
+    )
 
     # Link nodes
     material.node_tree.links.new(
         vertex_color_node.outputs["Color"], diffuse_node.inputs["Color"]
     )
     material.node_tree.links.new(
-        diffuse_node.outputs["BSDF"], output_node.inputs["Surface"]
+        diffuse_node.outputs["BSDF"], mix_shader_node.inputs[1]  # Shader 1
+    )
+    material.node_tree.links.new(
+        transparent_node.outputs["BSDF"], mix_shader_node.inputs[2]  # Shader 2
+    )
+    material.node_tree.links.new(
+        mix_shader_node.outputs["Shader"], output_node.inputs["Surface"]
     )
 
     # Assign material to object
@@ -176,15 +198,41 @@ def modify_obj_vertex_color(obj: bpy.types.Object, color: Tuple):
     # Create a Diffuse BSDF node
     diffuse_node = nodes.new(type="ShaderNodeBsdfDiffuse")
 
+    # Create a Transparent BSDF node for transparency
+    transparent_node = nodes.new(type="ShaderNodeBsdfTransparent")
+
+    # Create a Mix Shader node to blend diffuse and transparent
+    mix_shader_node = nodes.new(type="ShaderNodeMixShader")
+
     # Create an Output node
     output_node = nodes.new(type="ShaderNodeOutputMaterial")
+
+    # Set up transparency based on alpha value
+    if len(color) == 4 and color[3] < 1.0:
+        # Use alpha from input color for transparency
+        mix_shader_node.inputs[0].default_value = 1.0 - color[3]  # Factor (1 - alpha)
+    else:
+        # Use vertex color alpha channel for transparency
+        # Create a Separate RGB node to extract alpha from vertex color
+        separate_rgb_node = nodes.new(type="ShaderNodeSeparateColor")
+        material.node_tree.links.new(
+            vertex_color_node.outputs["Color"], separate_rgb_node.inputs["Color"]
+        )
+        # Set the mix factor to use the alpha channel from vertex color
+        mix_shader_node.inputs[0].default_value = 0.0  # This will be overridden by the link
 
     # Link nodes
     material.node_tree.links.new(
         vertex_color_node.outputs["Color"], diffuse_node.inputs["Color"]
     )
     material.node_tree.links.new(
-        diffuse_node.outputs["BSDF"], output_node.inputs["Surface"]
+        diffuse_node.outputs["BSDF"], mix_shader_node.inputs[1]  # Shader 1
+    )
+    material.node_tree.links.new(
+        transparent_node.outputs["BSDF"], mix_shader_node.inputs[2]  # Shader 2
+    )
+    material.node_tree.links.new(
+        mix_shader_node.outputs["Shader"], output_node.inputs["Surface"]
     )
 
     # Assign material to object
