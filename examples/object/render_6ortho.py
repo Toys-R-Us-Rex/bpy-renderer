@@ -24,7 +24,7 @@ scene_manager = SceneManager()
 scene_manager.clear(reset_keyframes=True)
 
 # 2. Import models
-load_file("../../assets/models/glb_example.glb")
+load_file("assets/models/glb_example.glb")
 
 # Others. smooth objects and normalize scene
 scene_manager.smooth()
@@ -34,7 +34,7 @@ scene_manager.set_materials_opaque()  # !!! Important for render normal but may 
 scene_manager.normalize_scene(1.0)
 
 # 3. Set environment
-set_env_map("../../assets/env_textures/brown_photostudio_02_1k.exr")
+set_env_map("assets/env_textures/brown_photostudio_02_1k.exr")
 # set_background_color([1.0, 1.0, 1.0, 1.0])
 
 # 4. Prepare cameras
