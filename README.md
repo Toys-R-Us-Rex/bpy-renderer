@@ -59,9 +59,17 @@ fi
 cd ..
 
 ```bash
-### 3. Run
+### 3. Run for 1 model
 PYTHONPATH=./src ./external/blender-3.6.5-linux-x64/blender \
   --background \
   --python examples/object/render_6ortho.py
+
+```
+
+```bash
+### 3. Run for 1 model
+PYTHONPATH=./src ./external/blender-3.6.5-linux-x64/blender \
+  --background \
+  --python examples/object/render_dataset.py
 
 ```
