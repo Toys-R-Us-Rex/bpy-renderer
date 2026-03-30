@@ -24,7 +24,7 @@ scene_manager = SceneManager()
 scene_manager.clear(reset_keyframes=True)
 
 # 2. Import models
-load_file("assets/models/glb_example.glb")
+load_file("assets/models/knightV2.glb")
 
 # Others. smooth objects and normalize scene
 scene_manager.smooth()
